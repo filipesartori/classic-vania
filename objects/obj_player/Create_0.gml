@@ -4,6 +4,7 @@
 estado_idle  = new estado();
 estado_kneel = new estado();
 estado_walk  = new estado();
+estado_jump  = new estado(); 
 
 #endregion
 
@@ -55,10 +56,24 @@ movimento_horizontal = function() {
     velh = (right - left) * max_velh;    
 } 
 
+//Movimento vertical
+movimento_vertical = function() {
+    if (!chao) {
+        if (velv < max_velv) {
+        	velv += grav;
+        }else {
+        	velv = max_velv;
+        }
+    	
+    }else {
+    	velv = 0;
+    }    
+} 
+
 //Ajustando a direcao que o player olha
 ajusta_xscale = function() {
-    if (right xor left) {
-        xscale = (right - left);    	
+    if (velh != 0) {
+        xscale = sign(velh);    	
     }    
 } 
 
@@ -94,6 +109,9 @@ cria_ataque = function() {
             
             //Estado Walk
             case estado_walk: sprite_index = spr_player_attack; break;
+            
+            //Estado Jump
+            case estado_jump: sprite_index = velv < 0 ? spr_player_stairs_attack_up : spr_player_stairs_attack_down; break;
         }
         
         //Checando se animacao acabou
@@ -103,9 +121,10 @@ cria_ataque = function() {
             
             //Definindo a sprite dele
             switch (estado_atual) {
-            	case estado_idle: sprite_index = spr_player_idle; break;
+            	case estado_idle: sprite_index  = spr_player_idle; break;
                 case estado_kneel: sprite_index = spr_player_kneel; break;
-                case estado_walk: sprite_index = spr_player_walk; break; 
+                case estado_walk: sprite_index  = spr_player_walk; break; 
+                case estado_jump: sprite_index  = spr_player_jump; break;
             }
         }
     }   
@@ -117,6 +136,7 @@ cria_ataque = function() {
 #region Estados
 
 #region Estado Idle
+
 //Criando o inicia do estado idle
 estado_idle.inicia = function() {
     //Se eu nao estou atacando, eu mudo de sprite
@@ -134,8 +154,19 @@ estado_idle.roda = function() {
     	troca_estado(estado_kneel);
     }  
     
-    if (right xor left) {
+    //Indo para o estado de walk
+    if (right xor left and !atacando) {
     	troca_estado(estado_walk);
+    }
+    
+    //Indo para o estado de jump
+    if (jump) {
+    	troca_estado(estado_jump);
+        velv = -max_velv;
+    }
+    
+    if (!chao) {
+    	troca_estado(estado_jump);
     }
     
     
@@ -151,6 +182,7 @@ estado_idle.finaliza = function() {
 #endregion
 
 #region Estado Kneel
+
 estado_kneel.inicia = function() {
     //Definindo a sprite correta
     if(!atacando) sprite_index = spr_player_kneel;
@@ -175,6 +207,7 @@ estado_kneel.finaliza = function() {
 #endregion
 
 #region Estado Walk
+
 estado_walk.inicia = function() {
     if(!atacando) sprite_index = spr_player_walk;
     image_index = 0;
@@ -184,9 +217,26 @@ estado_walk.roda = function() {
     //TODO lógica do estado walk
     movimento_horizontal();
     
+    //Atacando
+    cria_ataque();
+    //Se eu estou atacando eu cancelo a velocidade 
+    if (atacando) {
+    	velh = 0;
+    }
+    
     //Fazendo ele para de andar
     if (velh == 0) {
     	troca_estado(estado_idle);
+    }
+    
+    //Pulando
+    if (jump) {
+    	troca_estado(estado_jump);
+        velv = -max_velv;
+    }
+    
+    if (!chao) {
+    	troca_estado(estado_jump);
     }
 }  
 
@@ -196,7 +246,37 @@ estado_walk.finaliza = function() {
 
 #endregion
 
+#region Estado Jump
 
+estado_jump.inicia = function() {
+    sprite_index = spr_player_jump;
+} 
+
+estado_jump.roda = function() {
+    
+    //Ajustando meu image_index
+    if (!atacando) {
+    	image_index = velv < 0 ? 0 : 1;
+    }
+    
+    //Fazendo meu movimento vertical
+    movimento_vertical();
+    
+    //Atacando em quanto pula
+    cria_ataque();
+    
+    //Saindo do pulo
+    if (chao) {
+        troca_estado(estado_idle);	
+    }    
+} 
+
+estado_jump.finaliza = function() {
+    velh = 0;
+    image_speed = 1;
+} 
+
+#endregion
 
 
 #endregion
