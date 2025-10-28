@@ -9,8 +9,14 @@ estado_walk  = new estado();
 
 #region Variaveis
 
+//varaivel de controle da escala
+xscale = image_xscale;
+
 //Index da imagem
 img_ind = 0
+
+//Array de colisores
+colisor = [obj_colisor];
 
 //Inputs
 up        = noone;
@@ -20,6 +26,14 @@ right     = noone;
 jump      = noone;
 attack    = noone;
 subweapon = noone;
+
+//Movimentacao
+velh     = 0;
+velv     = 0;
+max_velh = 1;
+max_velv = 5;
+grav     = .2;
+chao     = false;
 
 
 //varaivel de Controle do ataque
@@ -31,6 +45,24 @@ atacando = false;
 
 #region Metodos
 
+//Metodo para checar se estou no chao
+checa_chao = function() {
+    chao = place_meeting(x, y+1, colisor);    
+} 
+
+//Movimentacao horizontal
+movimento_horizontal = function() {
+    velh = (right - left) * max_velh;    
+} 
+
+//Ajustando a direcao que o player olha
+ajusta_xscale = function() {
+    if (right xor left) {
+        xscale = (right - left);    	
+    }    
+} 
+
+//Metodo para pegar os inputs
 controles = function() {
     up        = keyboard_check(vk_up);
     down      = keyboard_check(vk_down);
@@ -92,15 +124,20 @@ estado_idle.inicia = function() {
 }
 
 estado_idle.roda = function() {
-    //TODO lógica do estado idle  
+    //TODO lógica do estado idle 
+    
+    //Indo para o estado de ataque
+    cria_ataque(); 
     
     //Indo para o estado de kneel
     if (down) {
     	troca_estado(estado_kneel);
     }  
     
-    //Indo para o estado de ataque
-    cria_ataque();
+    if (right xor left) {
+    	troca_estado(estado_walk);
+    }
+    
     
     
 } 
@@ -145,6 +182,12 @@ estado_walk.inicia = function() {
 
 estado_walk.roda = function() {
     //TODO lógica do estado walk
+    movimento_horizontal();
+    
+    //Fazendo ele para de andar
+    if (velh == 0) {
+    	troca_estado(estado_idle);
+    }
 }  
 
 estado_walk.finaliza = function() {
