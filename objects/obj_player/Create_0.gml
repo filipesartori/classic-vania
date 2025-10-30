@@ -17,7 +17,8 @@ xscale = image_xscale;
 img_ind = 0
 
 //Array de colisores
-colisor = [obj_colisor];
+lay_col = layer_tilemap_get_id("tl_level");
+colisor = [obj_colisor, lay_col];
 
 //Inputs
 up        = noone;
@@ -96,7 +97,7 @@ atualiza_pos_chicote = function() {
     //Se eu estou atacando e tenho um chicote, eu atualizo a posicao dele
     if (instance_exists(meu_chicote)) {
         //Atualizando minha posicao
-        chicote_x = x - 9;
+        chicote_x = x - (9 * xscale);
         chicote_y = y - sprite_yoffset + sprite_get_bbox_top(sprite_index) + 8;
         meu_chicote.x = chicote_x;
         meu_chicote.y = chicote_y;
@@ -113,9 +114,10 @@ cria_ataque = function() {
             image_index = 0;
             
             //Crio o meu chicote
-            chicote_x = x - 9;
+            chicote_x = x - (9 * xscale);
             chicote_y = y - sprite_yoffset + sprite_get_bbox_top(sprite_index) + 8;
-            meu_chicote = instance_create_depth(chicote_x, chicote_y, depth + 1, obj_chicote);    	
+            meu_chicote = instance_create_depth(chicote_x, chicote_y, depth + 1, obj_chicote);
+            meu_chicote.image_xscale = xscale;    	
         }    	
     }else { //Já estou atacando
         
