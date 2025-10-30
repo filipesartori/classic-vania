@@ -37,11 +37,13 @@
   },
   "name":"classic-vania",
   "resources":[
+    {"id":{"name":"obj_chicote","path":"objects/obj_chicote/obj_chicote.yy",},},
     {"id":{"name":"obj_colisor","path":"objects/obj_colisor/obj_colisor.yy",},},
     {"id":{"name":"obj_player","path":"objects/obj_player/obj_player.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"sc_state_machine","path":"scripts/sc_state_machine/sc_state_machine.yy",},},
     {"id":{"name":"sc_utilidades","path":"scripts/sc_utilidades/sc_utilidades.yy",},},
+    {"id":{"name":"spr_chicote","path":"sprites/spr_chicote/spr_chicote.yy",},},
     {"id":{"name":"spr_colisao","path":"sprites/spr_colisao/spr_colisao.yy",},},
     {"id":{"name":"spr_fundo","path":"sprites/spr_fundo/spr_fundo.yy",},},
     {"id":{"name":"spr_player_all","path":"sprites/spr_player_all/spr_player_all.yy",},},

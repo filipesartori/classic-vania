@@ -8,3 +8,5 @@ move_and_collide(velh, 0, colisor, 4);
 
 //Movimentacao vertical
 move_and_collide(0, velv, colisor, 12);
+
+atualiza_pos_chicote();

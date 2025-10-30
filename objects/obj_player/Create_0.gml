@@ -38,7 +38,10 @@ chao     = false;
 
 
 //varaivel de Controle do ataque
-atacando = false;
+atacando    = false;
+meu_chicote = noone;
+chicote_x   = 0;
+chicote_y   = 0;
 
 
 #endregion
@@ -89,6 +92,17 @@ controles = function() {
     
 }
 
+atualiza_pos_chicote = function() {
+    //Se eu estou atacando e tenho um chicote, eu atualizo a posicao dele
+    if (instance_exists(meu_chicote)) {
+        //Atualizando minha posicao
+        chicote_x = x - 9;
+        chicote_y = y - sprite_yoffset + sprite_get_bbox_top(sprite_index) + 8;
+        meu_chicote.x = chicote_x;
+        meu_chicote.y = chicote_y;
+    }
+}
+
 //Metodo de ataque
 cria_ataque = function() {
     //Só ataco se nao estou atacando ainda
@@ -96,9 +110,15 @@ cria_ataque = function() {
         //Checar se a pessoa apertou o botao de ataque
         if (attack) {
             atacando = true;
-            image_index = 0;    	
+            image_index = 0;
+            
+            //Crio o meu chicote
+            chicote_x = x - 9;
+            chicote_y = y - sprite_yoffset + sprite_get_bbox_top(sprite_index) + 8;
+            meu_chicote = instance_create_depth(chicote_x, chicote_y, depth + 1, obj_chicote);    	
         }    	
     }else { //Já estou atacando
+        
     	//Defina qual sprite tenho que usar
         switch (estado_atual) {
         	//Estado Idle
