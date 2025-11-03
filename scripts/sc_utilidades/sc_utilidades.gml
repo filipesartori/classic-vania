@@ -7,7 +7,7 @@ enum SUBWEAPON
     KNIFE
 }
 
-global.subweapon = SUBWEAPON.BOOMERANG;
+global.subweapon = SUBWEAPON.HOLYWATER;
 
 function finalizou_animacao() {
     //Checando se img_ind é maior do que minha imagem index

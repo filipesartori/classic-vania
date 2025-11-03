@@ -11,6 +11,7 @@ switch (global.subweapon) {
 	case SUBWEAPON.AXE       : sprite_index = spr_axe; break;
 	case SUBWEAPON.KNIFE     : sprite_index = spr_knife; break;
 	case SUBWEAPON.BOOMERANG : sprite_index = spr_boomerang; break;
+	case SUBWEAPON.HOLYWATER : sprite_index = spr_holywater; break;
 }
 
 axe = function() {
@@ -61,4 +62,18 @@ boomerang = function() {
     }
     
     
+} 
+
+holywater = function() {
+    //Checando chao
+    var _col = [obj_colisor, layer_tilemap_get_id("tl_level")]
+    var _chao = place_meeting(x, y+1, _col);
+    hspeed = 2 * image_xscale;
+    vspeed = 1;
+    
+    if (_chao) {
+    	instance_destroy();
+        var _filho = instance_create_depth(x, y, depth, obj_holyfire);
+        _filho.image_xscale = image_xscale;
+    }
 } 

@@ -5,6 +5,7 @@ switch (global.subweapon) {
 	case SUBWEAPON.AXE       : sprite_index = spr_axe_init; break;
 	case SUBWEAPON.KNIFE     : sprite_index = spr_knife_init; break;
     case SUBWEAPON.BOOMERANG : sprite_index = spr_boomerang_init; break;    
+    case SUBWEAPON.HOLYWATER : sprite_index = spr_holywater_init; break;    
 }
 
 //Criando os comportamentos
@@ -27,4 +28,10 @@ boomerang = function() {
     instance_destroy();
     var _x = x + image_xscale * 20;
     var _boomerang = instance_create_depth(_x, y, depth, obj_subweapon, {image_xscale: image_xscale});
+} 
+
+holywater = function() {
+    instance_destroy();
+    var _x = x + image_xscale * 20;
+    var _holy = instance_create_depth(_x, y, depth, obj_subweapon, {image_xscale: image_xscale});
 } 

@@ -58,6 +58,7 @@
     {"id":{"name":"spr_fire","path":"sprites/spr_fire/spr_fire.yy",},},
     {"id":{"name":"spr_fundo","path":"sprites/spr_fundo/spr_fundo.yy",},},
     {"id":{"name":"spr_hit","path":"sprites/spr_hit/spr_hit.yy",},},
+    {"id":{"name":"spr_holywater_init","path":"sprites/spr_holywater_init/spr_holywater_init.yy",},},
     {"id":{"name":"spr_holywater","path":"sprites/spr_holywater/spr_holywater.yy",},},
     {"id":{"name":"spr_knife_init","path":"sprites/spr_knife_init/spr_knife_init.yy",},},
     {"id":{"name":"spr_knife","path":"sprites/spr_knife/spr_knife.yy",},},
