@@ -34,13 +34,13 @@ attack    = noone;
 subweapon = noone;
 
 //Movimentacao
-velh     = 0;
-velv     = 0;
-max_velh = 1;
-max_velv = 5;
-grav     = .2;
-chao     = false;
-
+velh        = 0;
+velv        = 0;
+max_velh    = 1;
+max_velv    = 5;
+grav        = .2;
+chao        = false;
+escada_ang  = 0;
 
 //varaivel de Controle do ataque
 atacando    = false;
@@ -83,6 +83,51 @@ ajusta_xscale = function() {
     if (velh != 0) {
         xscale = sign(velh);    	
     }    
+} 
+
+//Checando as escadas
+entrando_escadas = function() {
+    //Colisao com a escadda
+    var _escada = collision_rectangle(x - (xscale * 4), y - 4, x + (xscale * 10), y + 4, lay_stair, 0, 1);
+    
+    if (_escada) {
+    	show_debug_message("posso entrar")
+    }else {
+        show_debug_message("Nao posso entrar")
+    	return false;
+    }
+    
+    //Checando a direcao que a escada esta
+    var _ang = 0;
+    for (var i = 45; i < 360; i += 90) {
+        var _x  = x + lengthdir_x(60, i);
+        var _y  = y + lengthdir_y(60, i);
+        
+    	var _col = collision_circle(_x, _y, 2, lay_stair, 0, 1);
+        
+        if (_col) {
+        	show_debug_message(i);
+            _ang = i;
+        }
+    }
+    
+    if (_ang == 0) {
+    	return false;
+    }
+    
+    escada_ang = _ang;
+    
+    //Vou checar se ele quer subri ou descer
+    if (up && _ang < 140) {
+        //Estou subindo
+    	return true;
+    }
+    if (down && _ang > 140) {
+        //Estou descendo
+        //vou aumentar o angulo das escadas em 180
+        escada_ang += 180;
+    	return true;
+    }
 } 
 
 //Metodo para pegar os inputs
@@ -185,6 +230,12 @@ estado_idle.roda = function() {
     	troca_estado(estado_walk);
     }
     
+    if (!atacando) {
+    	if(entrando_escadas()) {
+            troca_estado(estado_stair);
+        }
+    }
+    
     //Indo para o estado de jump
     if (jump) {
     	troca_estado(estado_jump);
@@ -255,6 +306,13 @@ estado_walk.roda = function() {
     	troca_estado(estado_idle);
     }
     
+    //Entrando nas escadas
+    if (!atacando) {
+    	if(entrando_escadas()) {
+            troca_estado(estado_stair);
+        }
+    }
+    
     //Pulando
     if (jump) {
     	troca_estado(estado_jump);
@@ -292,10 +350,16 @@ estado_jump.roda = function() {
     //Atacando em quanto pula
     cria_ataque();
     
+    //entrando nas escadas
+    if(entrando_escadas()) {
+        troca_estado(estado_stair);
+    }
+    
     //Saindo do pulo
     if (chao) {
         troca_estado(estado_idle);	
-    }    
+    }
+    
 } 
 
 estado_jump.finaliza = function() {
@@ -308,15 +372,46 @@ estado_jump.finaliza = function() {
 #region Estado Stair
 
 estado_stair.inicia = function() {
+    //Parei de colidir com tudo
+    colisor = [];
     
+    //falando que eu fico atras da escada
+    depth = 301;
+    
+    if(!atacando) sprite_index = up ? spr_player_climb_up : spr_player_climb_down;
 } 
 
 estado_stair.roda = function() {
     
+    var _velh = lengthdir_x(1, escada_ang);
+    var _velv = lengthdir_y(1, escada_ang);
+    velh = 0;
+    velv = 0;
+    image_speed = 0;
+    
+    if (up) {
+        image_speed = 1;
+        velh = _velh;
+        velv = _velv;
+        sprite_index = spr_player_climb_up;
+    }
+    
+    if (down) {
+        image_speed = 1;
+    	velh = -_velh;
+        velv = -_velv;
+        sprite_index = spr_player_climb_down;
+    }
+    
+    if (keyboard_check_pressed(vk_backspace)) {
+    	troca_estado(estado_idle);
+    }
 }
 
 estado_stair.finaliza = function() {
-    
+    //volto a colidir
+    colisor = [obj_colisor, lay_col];
+    depth = 200;
 }
 
 #endregion
