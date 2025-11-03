@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_player_stairs_attack_down",
   "bboxMode":0,
   "bbox_bottom":31,
@@ -12,9 +12,9 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"cb1cea4c-4414-40c4-acbd-b5ce82be954a","name":"cb1cea4c-4414-40c4-acbd-b5ce82be954a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"cab8dd93-1b6a-4b5d-bfd3-83f5f34a8209","name":"cab8dd93-1b6a-4b5d-bfd3-83f5f34a8209","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"28312575-b635-4281-ad9b-afa52fd32875","name":"28312575-b635-4281-ad9b-afa52fd32875","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"cb1cea4c-4414-40c4-acbd-b5ce82be954a","name":"cb1cea4c-4414-40c4-acbd-b5ce82be954a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"cab8dd93-1b6a-4b5d-bfd3-83f5f34a8209","name":"cab8dd93-1b6a-4b5d-bfd3-83f5f34a8209","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"28312575-b635-4281-ad9b-afa52fd32875","name":"28312575-b635-4281-ad9b-afa52fd32875","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
@@ -72,15 +72,9 @@
     "timeUnits":1,
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
-            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"cb1cea4c-4414-40c4-acbd-b5ce82be954a","path":"sprites/spr_player_stairs_attack_down/spr_player_stairs_attack_down.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"d735637d-ea99-46e0-966e-9ae55d67fefe","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
-            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"cab8dd93-1b6a-4b5d-bfd3-83f5f34a8209","path":"sprites/spr_player_stairs_attack_down/spr_player_stairs_attack_down.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"4f5b82cd-990d-4f2f-9ec7-cbbf1075ea8e","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
-            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"28312575-b635-4281-ad9b-afa52fd32875","path":"sprites/spr_player_stairs_attack_down/spr_player_stairs_attack_down.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"2edbf103-c118-4ffa-a8b5-91127daa3df1","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{"0":{"$SpriteFrameKeyframe":"","Id":{"name":"cb1cea4c-4414-40c4-acbd-b5ce82be954a","path":"sprites/spr_player_stairs_attack_down/spr_player_stairs_attack_down.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},},"Disabled":false,"id":"d735637d-ea99-46e0-966e-9ae55d67fefe","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{"0":{"$SpriteFrameKeyframe":"","Id":{"name":"cab8dd93-1b6a-4b5d-bfd3-83f5f34a8209","path":"sprites/spr_player_stairs_attack_down/spr_player_stairs_attack_down.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},},"Disabled":false,"id":"4f5b82cd-990d-4f2f-9ec7-cbbf1075ea8e","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{"0":{"$SpriteFrameKeyframe":"","Id":{"name":"28312575-b635-4281-ad9b-afa52fd32875","path":"sprites/spr_player_stairs_attack_down/spr_player_stairs_attack_down.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},},"Disabled":false,"id":"2edbf103-c118-4ffa-a8b5-91127daa3df1","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,

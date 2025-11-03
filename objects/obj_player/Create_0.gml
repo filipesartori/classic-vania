@@ -5,6 +5,7 @@ estado_idle  = new estado();
 estado_kneel = new estado();
 estado_walk  = new estado();
 estado_jump  = new estado(); 
+estado_stair = new estado();
 
 #endregion
 
@@ -18,6 +19,9 @@ img_ind = 0
 
 //Array de colisores
 lay_col = layer_tilemap_get_id("tl_level");
+lay_stair = layer_tilemap_get_id("tl_escada");
+
+
 colisor = [obj_colisor, lay_col];
 
 //Inputs
@@ -259,6 +263,7 @@ estado_walk.roda = function() {
     
     if (!chao) {
     	troca_estado(estado_jump);
+        velh = 0;
     }
 }  
 
@@ -300,6 +305,21 @@ estado_jump.finaliza = function() {
 
 #endregion
 
+#region Estado Stair
+
+estado_stair.inicia = function() {
+    
+} 
+
+estado_stair.roda = function() {
+    
+}
+
+estado_stair.finaliza = function() {
+    
+}
+
+#endregion
 
 #endregion
 
