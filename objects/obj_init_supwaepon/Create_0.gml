@@ -26,5 +26,5 @@ knife = function() {
 boomerang = function() {
     instance_destroy();
     var _x = x + image_xscale * 20;
-    var _boomerang = instance_create_depth(_x, y, depth, obj_subweapon);
+    var _boomerang = instance_create_depth(_x, y, depth, obj_subweapon, {image_xscale: image_xscale});
 } 
