@@ -158,17 +158,22 @@ atualiza_pos_chicote = function() {
 
 //Metodo de ataque
 cria_ataque = function() {
+    var _arma = obj_chicote;
+    
     //Só ataco se nao estou atacando ainda
     if (!atacando) {
         //Checar se a pessoa apertou o botao de ataque
-        if (attack) {
+        if (attack or subweapon) {
+            if (subweapon) {
+            	_arma = obj_init_supwaepon;
+            }
             atacando = true;
             image_index = 0;
             
             //Crio o meu chicote
             chicote_x = x - (9 * xscale);
             chicote_y = y - sprite_yoffset + sprite_get_bbox_top(sprite_index) + 8;
-            meu_chicote = instance_create_depth(chicote_x, chicote_y, 201, obj_chicote);
+            meu_chicote = instance_create_depth(chicote_x, chicote_y, 201, _arma);
             meu_chicote.image_xscale = xscale;    	
         }    	
     }else { //Já estou atacando
