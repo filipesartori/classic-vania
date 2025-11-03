@@ -107,7 +107,6 @@ entrando_escadas = function() {
     	var _col = collision_circle(_x, _y, 2, lay_stair, 0, 1);
         
         if (_col) {
-        	show_debug_message(i);
             _ang = i;
         }
     }
@@ -174,7 +173,8 @@ cria_ataque = function() {
             chicote_x = x - (9 * xscale);
             chicote_y = y - sprite_yoffset + sprite_get_bbox_top(sprite_index) + 8;
             meu_chicote = instance_create_depth(chicote_x, chicote_y, 201, _arma);
-            meu_chicote.image_xscale = xscale;    	
+            meu_chicote.image_xscale = xscale;
+            meu_chicote.depth = depth-1;    	
         }    	
     }else { //Já estou atacando
         
