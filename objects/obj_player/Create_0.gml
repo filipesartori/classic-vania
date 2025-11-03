@@ -41,6 +41,7 @@ max_velv    = 5;
 grav        = .2;
 chao        = false;
 escada_ang  = 0;
+escada_up   = 0;
 
 //varaivel de Controle do ataque
 atacando    = false;
@@ -120,12 +121,14 @@ entrando_escadas = function() {
     //Vou checar se ele quer subri ou descer
     if (up && _ang < 140) {
         //Estou subindo
+        escada_up = true;
     	return true;
     }
     if (down && _ang > 140) {
         //Estou descendo
         //vou aumentar o angulo das escadas em 180
         escada_ang += 180;
+        escada_up = false;
     	return true;
     }
 } 
@@ -165,7 +168,7 @@ cria_ataque = function() {
             //Crio o meu chicote
             chicote_x = x - (9 * xscale);
             chicote_y = y - sprite_yoffset + sprite_get_bbox_top(sprite_index) + 8;
-            meu_chicote = instance_create_depth(chicote_x, chicote_y, depth + 1, obj_chicote);
+            meu_chicote = instance_create_depth(chicote_x, chicote_y, 201, obj_chicote);
             meu_chicote.image_xscale = xscale;    	
         }    	
     }else { //Já estou atacando
@@ -173,16 +176,19 @@ cria_ataque = function() {
     	//Defina qual sprite tenho que usar
         switch (estado_atual) {
         	//Estado Idle
-            case estado_idle: sprite_index = spr_player_attack; break;
+            case estado_idle  :  sprite_index  = spr_player_attack; break;
             
             //Estado Kneel
-            case estado_kneel: sprite_index = spr_player_kneel_attack; break;
+            case estado_kneel :  sprite_index  = spr_player_kneel_attack; break;
             
             //Estado Walk
-            case estado_walk: sprite_index = spr_player_attack; break;
+            case estado_walk  :  sprite_index  = spr_player_attack; break;
             
             //Estado Jump
-            case estado_jump: sprite_index = velv < 0 ? spr_player_stairs_attack_up : spr_player_stairs_attack_down; break;
+            case estado_jump  :  sprite_index  = velv < 0 ? spr_player_stairs_attack_up : spr_player_stairs_attack_down; break;
+            
+            //Estado escada
+            case estado_stair :  sprite_index  = escada_up ? spr_player_stairs_attack_up:spr_player_stairs_attack_down; break;        
         }
         
         //Checando se animacao acabou
@@ -192,10 +198,12 @@ cria_ataque = function() {
             
             //Definindo a sprite dele
             switch (estado_atual) {
-            	case estado_idle: sprite_index  = spr_player_idle; break;
-                case estado_kneel: sprite_index = spr_player_kneel; break;
-                case estado_walk: sprite_index  = spr_player_walk; break; 
-                case estado_jump: sprite_index  = spr_player_jump; break;
+            	case estado_idle :  sprite_index  = spr_player_idle; break;
+                case estado_kneel:  sprite_index  = spr_player_kneel; break;
+                case estado_walk :  sprite_index  = spr_player_walk; break; 
+                case estado_jump :  sprite_index  = spr_player_jump; break;
+                case estado_stair:  sprite_index  = escada_up ? spr_player_climb_up : spr_player_climb_down; break;    
+                    
             }
         }
     }   
@@ -378,39 +386,111 @@ estado_stair.inicia = function() {
     //falando que eu fico atras da escada
     depth = 301;
     
+    //Pegando a posicao X na grid
+    var _x = (x div 8);
+    var _y = ((y + down-up) div 8);
+    x = _x * 8;
+    
+    var _ang = escada_up ? escada_ang : escada_ang - 180;
+    var _marg = 8;
+    switch (_ang) {
+    	case 45: _marg = 4; break;
+        case 135: _marg = 12; break;    
+    }
+    
+    //Checando a colisao com os tiles da escada
+    for (var i = -2; i <= 2; i++) {
+    	var _xx = (_x + i);
+        
+        //checando se tem um tile na posicao que eud ei
+        var _col = tilemap_get_at_pixel(lay_stair, _xx * 8, _y * 8);
+        
+        //Se o col for 0, nao achou nada
+        if (_col) {
+        	x = _xx * 8 + _marg;
+            break;
+        }
+    }
+    
     if(!atacando) sprite_index = up ? spr_player_climb_up : spr_player_climb_down;
 } 
 
 estado_stair.roda = function() {
     
-    var _velh = lengthdir_x(1, escada_ang);
-    var _velv = lengthdir_y(1, escada_ang);
+    cria_ataque();
+    
     velh = 0;
     velv = 0;
+    
+    if (atacando) {
+        image_speed = 1;
+    	exit;
+    }
+    
+    var _velh = lengthdir_x(1, escada_ang);
+    var _velv = lengthdir_y(1, escada_ang);
+    
     image_speed = 0;
     
     if (up) {
+        escada_up = true;
         image_speed = 1;
         velh = _velh;
         velv = _velv;
         sprite_index = spr_player_climb_up;
+        
+        //Checando se ja esotu no chao
+        var _chao = [obj_colisor, layer_tilemap_get_id("tl_level")];
+        var _no_chao = place_meeting(x, y + 1, _chao);
+        var _livre = !place_meeting(x, y, _chao);
+        
+        //Checando se acabou a escada subidno
+        var _x = x + lengthdir_x(16, escada_ang);
+        var _y = y + lengthdir_y(16, escada_ang);
+        
+        var _fim_e = !collision_point(_x, _y, layer_tilemap_get_id("tl_escada"), 1, 1);
+        
+        if (_fim_e && _no_chao && _livre) {
+        	troca_estado(estado_idle);
+        }
     }
     
     if (down) {
+        escada_up = false;
         image_speed = 1;
     	velh = -_velh;
         velv = -_velv;
         sprite_index = spr_player_climb_down;
+        
+        //Eu vou olhar se acabou a escada
+        //Checando se colidir com o chao
+        var _chao = [obj_colisor, layer_tilemap_get_id("tl_level")];
+        var _no_chao = place_meeting(x, y + 1, _chao);
+        var _livre = !place_meeting(x, y, _chao);
+        
+        //checnado se a escada acabou
+        var _x = x + lengthdir_x(16, escada_ang + 180);
+        var _y = y + lengthdir_y(16, escada_ang + 180);
+        
+        var _fim_e = !collision_point(_x, _y, layer_tilemap_get_id("tl_escada"), 1, 1);
+        
+        if (_fim_e && _no_chao && _livre) {
+        	troca_estado(estado_idle);
+        }
     }
     
     if (keyboard_check_pressed(vk_backspace)) {
     	troca_estado(estado_idle);
     }
+    
+    
 }
 
 estado_stair.finaliza = function() {
     //volto a colidir
     colisor = [obj_colisor, lay_col];
+    velh = 0;
+    velv = 0;
     depth = 200;
 }
 
