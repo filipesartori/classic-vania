@@ -1,3 +1,9 @@
+//herdando os eventos do pai
+event_inherited();
+
+vida_max = 10;
+vida_atual = 1;
+
 #region Criacao dos estados
 
 //criando o primeiro estado do player
