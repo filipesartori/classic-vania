@@ -9,3 +9,5 @@ for (var i = 45; i < 360; i += 90) {
     draw_circle(_x, _y, 2, false);
 }
  */
+
+draw_text(x + 40, y - 10, vida_atual);

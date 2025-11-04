@@ -2,7 +2,7 @@
 event_inherited();
 
 vida_max = 10;
-vida_atual = 1;
+vida_atual = 10;
 
 #region Criacao dos estados
 
