@@ -37,7 +37,7 @@ function aplica_dano(_dano = 1, _player = true) {
             var _contem = array_contains(lista_livre, _outro)
             if (!_contem) {
             	//Se a lista NAO contem o outro, eu aplico o dano nele e adiciono ele a lista
-                _outro.recebe_dano(.1);
+                _outro.recebe_dano(_dano);
                 array_push(lista_livre, _outro);
             }
         }
