@@ -29,7 +29,17 @@
   "physicsShape":1,
   "physicsShapePoints":[],
   "physicsStartAwake":true,
-  "properties":[],
+  "properties":[
+    {"$GMObjectProperty":"v2","%Name":"item","filters":[],"listItems":[
+        "\"livre\"",
+        "\"axe\"",
+        "\"boomerang\"",
+        "\"holywater\"",
+        "\"knife\"",
+        "\"coracao\"",
+        "\"carne\"",
+      ],"multiselect":false,"name":"item","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"\"livre\"","varType":6,},
+  ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,

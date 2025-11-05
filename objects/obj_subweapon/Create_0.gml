@@ -7,7 +7,9 @@ subi      = false;
 voltei    = false;
 terminei  = false;
 
-switch (global.subweapon) {
+subweapon = global.subweapon;
+
+switch (subweapon) {
 	case SUBWEAPON.AXE       : sprite_index = spr_axe; break;
 	case SUBWEAPON.KNIFE     : sprite_index = spr_knife; break;
 	case SUBWEAPON.BOOMERANG : sprite_index = spr_boomerang; break;
